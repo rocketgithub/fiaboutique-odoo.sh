@@ -27,3 +27,7 @@
 	path = conciliacion_bancaria
 	url = https://github.com/rocketgithub/conciliacion_bancaria.git
 	branch = 13.0
+[submodule "albaran_analitico"]
+	path = albaran_analitico
+	url = git@github.com:rocketgithub/albaran_analitico.git
+	branch = 13.0

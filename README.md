@@ -1,2 +1,1 @@
 # fiaboutique-odoo.sh
-

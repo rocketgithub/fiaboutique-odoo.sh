@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!--"License URL :<https://store.webkul.com/license.html/>" -->
+<odoo>
+	<data>
+		<record id="shopify_instance_view_form" model="ir.ui.view">
+			<field name="name">multi.channel.sale.from</field>
+			<field name="model">multi.channel.sale</field>
+			<field name="inherit_id" ref="odoo_multi_channel_sale.multi_channel_view_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//group[@name='core_credentials']" position="attributes">
+					<attribute name="invisible">False</attribute>
+				</xpath>
+				<xpath expr="//group[@name='state_configuration']" position="attributes">
+					<attribute name="attrs">{'invisible':[('channel','=','shopify')]}</attribute>
+				</xpath>
+
+				<xpath expr="//page[@name='credentials']/div[2]" position="replace">
+					<div class="row mt16 o_settings_container">
+						<div class="col-xs-12 col-md-6 o_setting_box"  attrs="{'invisible':[('channel','=','shopify'),('login_with_apikey','=',False)]}">
+							<div class="o_setting_left_pane"/>
+							<div class="o_setting_right_pane">
+								<label string="API Key" for="email"  attrs="{'invisible':[('channel','!=','shopify')]}"/>
+								<label string="Email/User" for="email"  attrs="{'invisible':[('channel','=','shopify')]}"/>
+								<div class="text-muted" attrs="{'invisible':[('channel','!=','shopify')]}">
+									eg: sh545yghj0d0a1b83d5e527y9by99
+								</div>
+								<div class="text-muted" attrs="{'invisible':[('channel','=','shopify')]}">
+									eg: admin@example.com
+								</div>
+								<div class="text-primary">
+									<b><field name="email" groups="base.group_no_one" attrs="{'readonly':[('state','=','validate')]}"/></b>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6 o_setting_box">
+							<div class="o_setting_left_pane"/>
+							<div class="o_setting_right_pane">
+								<label string="Access Token/Password" for="api_key"  attrs="{'invisible':[('channel','!=','shopify')]}"/>
+								<label string="api_key/Password" for="api_key"  attrs="{'invisible':[('channel','=','shopify')]}"/>
+								<div class="text-muted" attrs="{'invisible':[('channel','!=','shopify')]}">
+									Access Token/Password of Channel API
+								</div>
+								<div class="text-muted" attrs="{'invisible':[('channel','=','shopify')]}">
+									Api Key/Password of Channel API
+								</div>
+								<div class="text-primary">
+									<b><field name="api_key" password="True" groups="base.group_no_one" attrs="{'readonly':[('state','=','validate')]}"/></b>
+								</div>
+							</div>
+						</div>
+					</div>
+				</xpath>
+
+				<xpath expr="//page[@name='credentials']/div[2]" position="after">
+					<h3 attrs="{'invisible':[('channel','!=','shopify')]}">
+						<p class="text-danger" attrs="{'invisible':[('login_with_apikey','=',True)]}">Please make sure ShopifyAPI version is 11.0.0.</p>
+					</h3>
+				</xpath>
+
+				<xpath expr="//page[@name='credentials']/div/div" position="after">
+					<div class="col-xs-12 col-md-6 o_setting_box"  attrs="{'invisible':[('channel','!=','shopify')]}">
+						<div class="o_setting_left_pane">
+							<div>
+								<field name="login_with_apikey" attrs="{'readonly':[('state','=','validate')]}"/>
+							</div>
+						</div>
+						<div class="o_setting_right_pane">
+							<label string="Login With API Key" for="api_key"/>
+						</div>
+					</div>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="shopify_instance_view_kanban" model="ir.ui.view">
+			<field name="name">multi.channel.sale.kanban</field>
+			<field name="model">multi.channel.sale</field>
+			<field name="inherit_id" ref="odoo_multi_channel_sale.multi_channel_view_kanban"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[hasclass('o_kanban_card_content')]" position="inside">
+					<div class="o_kanban_primary_left" >
+						<div class="o_primary">
+							<center>
+								<span>
+									<t t-field="record.name.value"/>
+								</span>
+							</center>
+						</div>
+						<div t-if="record.channel.value == 'Shopify'" style="color:rgb(162, 70, 137)">
+							<center>
+								<img
+									src="/shopify_odoo_bridge/static/src/img/dashboard.svg"
+									alt="shopify_logo"
+									style="margin-left: 180px;"
+								/>
+								<h3>
+									<t t-esc="record.name.value"/>
+								</h3>
+							</center>
+						</div>
+					</div>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
